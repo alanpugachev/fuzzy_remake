@@ -1,0 +1,342 @@
+/* ====================== */
+/*       Base Styles       */
+/* ====================== */
+:root {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #252525;
+    --bg-accent: #2a1a3a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #aaa;
+    --primary-color: #673ab7;
+    --primary-dark: #5e35b1;
+    --primary-darker: #4527a0;
+    --accent-color: #9c27b0;
+    --light-accent: #ba68c8;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* ====================== */
+/*      Layout Styles      */
+/* ====================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 90%;
+}
+
+/* ====================== */
+/*    Component Styles     */
+/* ====================== */
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button:active {
+    transform: translateY(0);
+}
+
+.nav-button.active {
+    background-color: var(--primary-darker);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Content Boxes */
+.content-box {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+    max-width: 1200px;
+}
+
+.highlight-box {
+    background-color: var(--bg-accent);
+    border-left: 4px solid var(--primary-color);
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+}
+
+/* Cards */
+.use-card {
+    background-color: var(--bg-tertiary);
+    padding: 1rem;
+    border-radius: 6px;
+    border-top: 2px solid var(--primary-color);
+}
+
+/* ====================== */
+/*      Typography        */
+/* ====================== */
+h1, h2, h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    color: var(--light-accent);
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    color: var(--accent-color);
+    margin: 2rem 0 1rem;
+    font-size: 1.4rem;
+}
+
+.disclaimer {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: 2rem;
+}
+
+.thesis-badge {
+    background-color: var(--primary-darker);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    display: inline-block;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* ====================== */
+/*      List Styles       */
+/* ====================== */
+.feature-list {
+    margin: 1.8rem 0;
+}
+
+.feature-list li {
+    margin-bottom: 0.5rem;
+    position: relative;
+    font-weight: 450;
+}
+
+.feature-list li:before {
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+}
+
+ol {
+    padding-left: 25px;
+    line-height: 1.7;
+}
+
+ol li {
+    margin-bottom: 10px;
+}
+
+/* ====================== */
+/*     Survey Styles      */
+/* ====================== */
+
+.disclaimer-box {
+    background-color: var(--bg-accent);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    border-left: 3px solid var(--primary-color);
+}
+
+.survey-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.survey-question {
+    background-color: var(--bg-tertiary);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.rating-scale {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.radio-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.radio-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.radio-option input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.radio-option input[type="radio"]:checked {
+    background-color: var(--primary-color);
+    box-shadow: inset 0 0 0 3px var(--bg-tertiary);
+}
+
+.radio-option label {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.submit-button {
+    align-self: flex-end;
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* ====================== */
+/*     Survey Action      */
+/* ====================== */
+.survey-action {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.survey-button {
+    padding: 12px 36px;
+    font-size: 1.1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.survey-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.survey-button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .survey-button {
+        width: 100%;
+        padding: 14px;
+    }
+}
+
+/* ====================== */
+/*   Special Components   */
+/* ====================== */
+.placeholder {
+    background-color: var(--bg-tertiary);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-color);
+    color: var(--text-secondary);
+    margin-top: 15px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+/* ====================== */
+/*      Grid Layouts      */
+/* ====================== */
+.uses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+/* ====================== */
+/*    Responsive Styles   */
+/* ====================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .nav-button {
+        width: 100%;
+    }
+    
+    .content-wrapper {
+        width: 95%;
+    }
+}
