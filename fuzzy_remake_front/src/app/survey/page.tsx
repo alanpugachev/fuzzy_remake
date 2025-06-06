@@ -1,4 +1,7 @@
-import questionData from '../../../../common/questions.json'
+"use client";
+
+import questionData from '../../../../common/questions.json';
+import React, { useState } from 'react';
 
 export type Question = {
     id: number,
@@ -7,64 +10,30 @@ export type Question = {
     reverse_scored: boolean;
 };
 
-export function QuestionList() {
-    const questions: Question[] = questionData;
-
-    return (
-        <>
-            {questions.map((question) => (
-                <div className='survey-question' key={question.id}>
-                    <h3>
-                        {question.text}
-                    </h3>
-
-                    <div className='rating-scale'>
-                        <span>
-                            Never
-                        </span>
-
-                        <span>
-                            Rarely
-                        </span>
-
-                        <span>
-                            Sometimes
-                        </span>
-
-                        <span>
-                            Often
-                        </span>
-
-                        <span>
-                            Always
-                        </span>
-                    </div>
-
-                    <div className="radio-group">
-                    {Array.from({ length: 5 }, (_, num) => {
-                        const currentNum = num + 1;
-                        return (
-                        <div className="radio-option" key={`q${question.id}_${currentNum}`}>
-                            <input
-                                type="radio"
-                                name={`q${question.id}`}
-                                id={`q${question.id}_${currentNum}`}
-                                value={currentNum.toString()}
-                            />
-                            <label htmlFor={`q${question.id}_${currentNum}`}>
-                                {currentNum}
-                            </label>
-                        </div>
-                        );
-                    })}
-                    </div>
-                </div>
-            ))}
-        </>
-    )
-}
-
 export default function Survey() {
+    const questions: Question[] = questionData
+    const [answers, setAnswers] = useState<Record<string, string>>({})
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+
+        try {
+            const response = await fetch('/api/submit-survey', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(answers),
+            })
+
+            if (response.ok) {
+                alert('Answers submitted successfully')
+            }
+        } catch (error) {
+            console.error('Error', error)
+        }
+    }
+
     return (
         <div className="container">
             <div className="container-wrapper">
@@ -91,10 +60,57 @@ export default function Survey() {
                         Please answer honestly based on your feelings. There are no right or wrong answers.
                     </div>
 
-                    <form className='survey-form' action="/submit-survey" method='POST'>
-                        <QuestionList/>
+                    <form className='survey-form' onSubmit={handleSubmit}>
+                        {questions.map((question) => (
+                            <div className='survey-question' key={question.id}>
+                                <h3>
+                                    {question.text}
+                                </h3>
 
-                        <button className='submit-button'>
+                                <div className='rating-scale'>
+                                    <span>
+                                        Never
+                                    </span>
+
+                                    <span>
+                                        Rarely
+                                    </span>
+
+                                    <span>
+                                        Sometimes
+                                    </span>
+
+                                    <span>
+                                        Often
+                                    </span>
+
+                                    <span>
+                                        Always
+                                    </span>
+                                </div>
+
+                                <div className="radio-group">
+
+                                {[1, 2, 3, 4, 5].map((num) => (
+                                    <div className="radio-option" key={`q${question.id}_${num}`}>
+                                        <input
+                                            type="radio"
+                                            name={`q${question.id}`}
+                                            id={`q${question.id}_${num}`}
+                                            value={num}
+                                            onChange={() => setAnswers({...answers, [question.id]: num.toString() as string})}
+                                        />
+                                        <label htmlFor={`q${question.id}_${num}`}>
+                                            {num}
+                                        </label>
+                                    </div>
+                                ))}
+
+                                </div>
+                            </div>
+                        ))}
+
+                        <button className='submit-button' type='submit'>
                             Submit
                         </button>
                     </form>
