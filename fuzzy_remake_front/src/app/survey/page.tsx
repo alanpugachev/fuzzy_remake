@@ -12,18 +12,25 @@ export type Question = {
 
 export default function Survey() {
     const questions: Question[] = questionData
-    const [answers, setAnswers] = useState<Record<string, string>>({})
+    const [answers, setAnswers] = useState<Record<number, string>>({})
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
+        const answersArray = Object.entries(answers).map(([questionId, value]) => ({
+            questionId: `${questionId}`,
+            value: value
+        }))
+
         try {
-            const response = await fetch('/api/submit-survey', {
+            const response = await fetch('http://localhost:8080/api/survey/submit-survey', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(answers),
+                body: JSON.stringify({
+                    answers: answersArray
+                }),
             })
 
             if (response.ok) {
@@ -32,6 +39,13 @@ export default function Survey() {
         } catch (error) {
             console.error('Error', error)
         }
+    }
+
+    const handleAnswerChange = (questionId: number, value: string) => {
+        setAnswers(prev => ({
+            ...prev,
+            [questionId]: value
+        }))
     }
 
     return (
@@ -68,25 +82,15 @@ export default function Survey() {
                                 </h3>
 
                                 <div className='rating-scale'>
-                                    <span>
-                                        Never
-                                    </span>
+                                    <span>Never</span>
 
-                                    <span>
-                                        Rarely
-                                    </span>
+                                    <span>Rarely</span>
 
-                                    <span>
-                                        Sometimes
-                                    </span>
+                                    <span>Sometimes</span>
 
-                                    <span>
-                                        Often
-                                    </span>
+                                    <span>Often</span>
 
-                                    <span>
-                                        Always
-                                    </span>
+                                    <span>Always</span>
                                 </div>
 
                                 <div className="radio-group">
@@ -98,7 +102,7 @@ export default function Survey() {
                                             name={`q${question.id}`}
                                             id={`q${question.id}_${num}`}
                                             value={num}
-                                            onChange={() => setAnswers({...answers, [question.id]: num.toString() as string})}
+                                            onChange={() => handleAnswerChange(question.id, num.toString()) }
                                         />
                                         <label htmlFor={`q${question.id}_${num}`}>
                                             {num}
