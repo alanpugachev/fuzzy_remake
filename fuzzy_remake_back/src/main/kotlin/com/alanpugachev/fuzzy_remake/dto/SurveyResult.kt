@@ -5,6 +5,6 @@ data class SurveyAnswer(
     val value: String
 )
 
-data class SurveyResponse(
+data class SurveyResult(
     val answers: List<SurveyAnswer>
 )
