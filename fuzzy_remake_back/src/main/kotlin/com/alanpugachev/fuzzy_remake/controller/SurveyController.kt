@@ -22,8 +22,6 @@ class SurveyController(
         @RequestBody surveyResult: SurveyResult
     ): ResponseEntity<String> {
         try {
-            println("Received answers: ${surveyResult.answers}")
-
             resultRepository.save(
                 Result(
                     result = surveyResult,
