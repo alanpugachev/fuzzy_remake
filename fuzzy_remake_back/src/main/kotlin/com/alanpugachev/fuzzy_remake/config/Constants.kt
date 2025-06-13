@@ -4,4 +4,4 @@ const val KRAFT_TOPIC_NAME = "kraft"
 
 const val RESULTS_TOPIC = "results"
 
-const val GROUP_ID = "group"
+const val ASYNC_GROUP = "async-group"

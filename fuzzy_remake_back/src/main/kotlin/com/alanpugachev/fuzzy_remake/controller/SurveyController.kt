@@ -1,7 +1,9 @@
 package com.alanpugachev.fuzzy_remake.controller
 
+import com.alanpugachev.fuzzy_remake.dto.ResultDTO
 import com.alanpugachev.fuzzy_remake.dto.SurveyResult
 import com.alanpugachev.fuzzy_remake.entity.Result
+import com.alanpugachev.fuzzy_remake.producer.SurveyResultProducer
 import com.alanpugachev.fuzzy_remake.repository.ResultRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -15,7 +17,8 @@ import java.time.LocalDateTime
 @RequestMapping("/api/survey")
 @CrossOrigin(origins = ["http://localhost:3000"]) /* only for testing */
 class SurveyController(
-    private val resultRepository: ResultRepository
+    private val resultRepository: ResultRepository,
+    private val surveyResultProducer: SurveyResultProducer
 ) {
     @PostMapping("/submit-survey")
     fun handleSurveyFormSubmission(
@@ -28,8 +31,19 @@ class SurveyController(
                     createdAt = LocalDateTime.now()
                 )
             )
+                .also {
+                    surveyResultProducer
+                        .sendResultDtoMessage(
+                            ResultDTO(
+                                id = it.id ?: throw RuntimeException("Result id is missing"),
+                                userId = 1,
+                                rawResult = it.result,
+                                createdAt = LocalDateTime.now()
+                            )
+                        )
+                }
 
-            return ResponseEntity.ok("Success")
+            return ResponseEntity.ok("Result was saved")
         } catch (e: Exception) {
             return ResponseEntity.badRequest().body("${e.message}")
         }
