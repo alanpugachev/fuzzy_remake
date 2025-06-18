@@ -3,6 +3,7 @@ package com.alanpugachev.fuzzy_remake.entity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
@@ -13,8 +14,8 @@ import java.time.LocalDateTime
 @Table(name = "users")
 class User(
     @Id
-    @GeneratedValue
-    val id: Long,
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Long? = null,
 
     @Column(name = "username", unique = true)
     var username: String,
@@ -27,12 +28,12 @@ class User(
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
-    val createdAt: LocalDateTime,
+    val createdAt: LocalDateTime? = null,
 
     @UpdateTimestamp
     @Column(name = "updated_at", updatable = true)
-    var updatedAt: LocalDateTime,
+    var updatedAt: LocalDateTime? = null,
 
     @Column(name = "deleted_at", nullable = true)
-    var deletedAt: LocalDateTime?
+    var deletedAt: LocalDateTime? = null
 )

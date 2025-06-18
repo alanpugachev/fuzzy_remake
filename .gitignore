@@ -1,0 +1,63 @@
+# JetBrains IDE (IntelliJ, Android Studio, etc)
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+gen/
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor temp files
+*.swp
+*.*~
+~*.*
+*.bak
+
+# Kotlin specific
+.kotlin/
+kotlin-js-store/
+
+# Android (если Android проект)
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+local.properties
+*.keystore
+*.jks
