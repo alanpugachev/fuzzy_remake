@@ -58,6 +58,12 @@ export default function Survey() {
                         </button>
                     </a>
 
+                    <a href="/admin">
+                        <button className="nav-button">
+                        Admin
+                        </button>
+                    </a>
+
                     <a href="/about">
                         <button className="nav-button">
                         About
