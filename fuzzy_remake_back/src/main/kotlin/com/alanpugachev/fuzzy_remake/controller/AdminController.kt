@@ -30,9 +30,11 @@ class AdminController(
             return ResponseEntity.badRequest().body("${e.message}")
         }
 
-        return ResponseEntity.ok(mapOf(
-            "message" to "User registered successfully",
-            "userId" to user.id
-        ))
+        return ResponseEntity.ok(
+            mapOf(
+                "message" to "User registered successfully",
+                "userId" to user.id
+            )
+        )
     }
 }
