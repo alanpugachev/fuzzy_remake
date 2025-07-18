@@ -35,7 +35,7 @@ class SurveyController(
                     surveyResultProducer
                         .sendResultDtoMessage(
                             ResultDTO(
-                                id = it.id ?: throw RuntimeException("Result id is missing"),
+                                id = it.id ?: throw RuntimeException("Result id not found"),
                                 userId = 1,
                                 rawResult = it.result,
                                 createdAt = LocalDateTime.now()

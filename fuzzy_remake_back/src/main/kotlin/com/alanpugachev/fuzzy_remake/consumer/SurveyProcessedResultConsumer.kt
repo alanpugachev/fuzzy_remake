@@ -16,11 +16,10 @@ class SurveyProcessedResultConsumer(
     private val resultRepository: ResultRepository,
     private val objectMapper: ObjectMapper
 ) {
-
     @KafkaListener(topics = [RESULTS_TOPIC], groupId = ASYNC_GROUP)
     fun processMessage(jsonMessage: String) {
         try {
-            val surveyResult: SurveyResult = objectMapper.readValue<SurveyResult>(jsonMessage)
+            val surveyResult = objectMapper.readValue<SurveyResult>(jsonMessage)
 
             resultRepository.save(
                 Result(
