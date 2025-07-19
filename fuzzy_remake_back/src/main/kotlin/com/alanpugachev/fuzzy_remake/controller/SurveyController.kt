@@ -1,43 +1,40 @@
 package com.alanpugachev.fuzzy_remake.controller
 
-import com.alanpugachev.fuzzy_remake.dto.ResultDTO
-import com.alanpugachev.fuzzy_remake.dto.SurveyResult
-import com.alanpugachev.fuzzy_remake.entity.Result
+import com.alanpugachev.fuzzy_remake.dto.AnswersDTO
+import com.alanpugachev.fuzzy_remake.dto.UsersSurveyAnswersDTO
+import com.alanpugachev.fuzzy_remake.entity.SurveyAnswers
 import com.alanpugachev.fuzzy_remake.producer.SurveyResultProducer
-import com.alanpugachev.fuzzy_remake.repository.ResultRepository
+import com.alanpugachev.fuzzy_remake.repository.AnswersRepository
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/survey")
 @CrossOrigin(origins = ["http://localhost:3000"]) /* only for testing */
 class SurveyController(
-    private val resultRepository: ResultRepository,
+    private val answersRepository: AnswersRepository,
     private val surveyResultProducer: SurveyResultProducer
 ) {
     @PostMapping("/submit-survey")
     fun handleSurveyFormSubmission(
-        @RequestBody surveyResult: SurveyResult
+        @RequestBody usersSurveyAnswersDTO: UsersSurveyAnswersDTO
     ): ResponseEntity<String> {
         try {
-            resultRepository.save(
-                Result(
-                    result = surveyResult,
+            answersRepository.save(
+                SurveyAnswers(
+                    userId = 1, /* todo */
+                    answers = usersSurveyAnswersDTO,
                     createdAt = LocalDateTime.now()
                 )
             )
                 .also {
                     surveyResultProducer
                         .sendResultDtoMessage(
-                            ResultDTO(
+                            AnswersDTO(
                                 id = it.id ?: throw RuntimeException("Result id not found"),
                                 userId = 1,
-                                rawResult = it.result,
+                                rawAnswers = it.answers,
                                 createdAt = LocalDateTime.now()
                             )
                         )
