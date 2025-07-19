@@ -1,25 +1,23 @@
 package com.alanpugachev.fuzzy_remake.entity
 
-import com.alanpugachev.fuzzy_remake.dto.UsersSurveyAnswersDTO
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.type.SqlTypes
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "survey_answers")
-class SurveyAnswers(
+@Table(name = "survey_results")
+class SurveyResults(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
     @Column(name = "user_id")
     val userId: Long,
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "answers")
-    val answers: UsersSurveyAnswersDTO,
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
