@@ -11,7 +11,7 @@ def handle_message(message):
 
     answers = {
         answer['questionId']: int(answer['value'])
-        for answer in data['rawResult']['answers']
+        for answer in data['rawAnswers']['answers']
     }
 
     normalized_9 = ProcessingFuzzyResultService.group_and_normalize(answers)
