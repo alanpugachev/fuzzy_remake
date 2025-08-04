@@ -1,12 +1,10 @@
 package com.alanpugachev.fuzzy_remake.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import com.alanpugachev.fuzzy_remake.dto.SurveyResultsDTO
+import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 import java.time.LocalDateTime
 
 @Entity
@@ -18,6 +16,10 @@ class SurveyResults(
 
     @Column(name = "user_id")
     val userId: Long,
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "raw_results")
+    val rawResults: SurveyResultsDTO,
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
