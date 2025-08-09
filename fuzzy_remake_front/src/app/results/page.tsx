@@ -1,18 +1,26 @@
-// pages/results.tsx
+"use client";
+
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import styles from '../styles/Results.module.css';
 
 type SurveyResult = {
-  hysteria: ScaleLevels;
-  hypochondria: ScaleLevels;
-  depression: ScaleLevels;
-  psychopathy: ScaleLevels;
-  paranoia: ScaleLevels;
-  psychasthenia: ScaleLevels;
-  schizophrenia: ScaleLevels;
-  hypomania: ScaleLevels;
-  introversion: ScaleLevels;
+  id: number;
+  userId: number;
+  rawResults: {
+    user_id: number;
+    hysteria: ScaleLevels;
+    hypochondria: ScaleLevels;
+    depression: ScaleLevels;
+    psychopathy: ScaleLevels;
+    paranoia: ScaleLevels;
+    psychasthenia: ScaleLevels;
+    schizophrenia: ScaleLevels;
+    hypomania: ScaleLevels;
+    introversion: ScaleLevels;
+    processed_at: string;
+    version: string;
+  };
+  createdAt: string;
 };
 
 type ScaleLevels = {
@@ -31,12 +39,15 @@ export default function ResultsPage() {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch('/api/get-results');
+        const response = await fetch('http://localhost:8080/api/results/get-results');
+
         if (!response.ok) {
-          throw new Error('Failed to fetch results');
+          throw new Error(`Failed to fetch results: ${response.statusText}`);
         }
+
         const data = await response.json();
         setResults(data);
+
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
       } finally {
@@ -52,7 +63,7 @@ export default function ResultsPage() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Head>
         <title>Survey Results</title>
         <link 
@@ -62,26 +73,31 @@ export default function ResultsPage() {
         <link href="/static/styles.css" rel="stylesheet" />
       </Head>
 
-      <div className={styles.contentWrapper}>
-        <div className={styles.navbar}>
+      <div className="contentWrapper">
+        <div className="navbar">
           <a href="/">
-            <button className={styles.navButton}>Home</button>
+            <button className="nav-button">Home</button>
           </a>
           <a href="/about">
-            <button className={styles.navButton}>About</button>
+            <button className="nav-button">About</button>
           </a>
         </div>
 
-        <main className={styles.contentBox}>
+        <main className="contentBox">
           <h1>Psychological Survey Results</h1>
 
-          {loading && <div className={styles.loader}>Loading results...</div>}
+          {loading && <div className="loader">Loading results...</div>}
           
-          {error && <div className={styles.error}>Error: {error}</div>}
+          {error && <div className="error">Error: {error}</div>}
           
           {results && (
-            <div className={styles.resultsTableContainer}>
-              <table className={styles.resultsTable}>
+            <div className="resultsTableContainer">
+
+              <div className="userId-display">
+                User ID: {results.userId}
+              </div>
+              
+              <table className="resultsTable">
                 <thead>
                   <tr>
                     <th>Scale</th>
@@ -94,19 +110,19 @@ export default function ResultsPage() {
                 </thead>
                 <tbody>
                   {[
-                    { name: 'Hysteria', levels: results.hysteria },
-                    { name: 'Hypochondria', levels: results.hypochondria },
-                    { name: 'Depression', levels: results.depression },
-                    { name: 'Psychopathy', levels: results.psychopathy },
-                    { name: 'Paranoia', levels: results.paranoia },
-                    { name: 'Psychasthenia', levels: results.psychasthenia },
-                    { name: 'Schizophrenia', levels: results.schizophrenia },
-                    { name: 'Hypomania', levels: results.hypomania },
-                    { name: 'Introversion', levels: results.introversion },
+                    { name: 'Hysteria', levels: results.rawResults.hysteria },
+                    { name: 'Hypochondria', levels: results.rawResults.hypochondria },
+                    { name: 'Depression', levels: results.rawResults.depression },
+                    { name: 'Psychopathy', levels: results.rawResults.psychopathy },
+                    { name: 'Paranoia', levels: results.rawResults.paranoia },
+                    { name: 'Psychasthenia', levels: results.rawResults.psychasthenia },
+                    { name: 'Schizophrenia', levels: results.rawResults.schizophrenia },
+                    { name: 'Hypomania', levels: results.rawResults.hypomania },
+                    { name: 'Introversion', levels: results.rawResults.introversion },
                   ].map(({ name, levels }) => (
                     <tr key={name}>
                       <td>
-                        <span className={styles.scaleName}>{name}</span>
+                        <span className="scaleName">{name}</span>
                       </td>
                       <td>{formatNumber(levels.low)}</td>
                       <td>{formatNumber(levels.mid)}</td>
@@ -117,6 +133,10 @@ export default function ResultsPage() {
                   ))}
                 </tbody>
               </table>
+              
+              <div className="processedAt-display">
+                Processed at: {new Date(results.rawResults.processed_at).toLocaleString()}
+              </div>
             </div>
           )}
         </main>

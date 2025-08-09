@@ -1,3 +1,5 @@
+/* todo organize */
+
 /* ====================== */
 /*       Base Styles       */
 /* ====================== */
@@ -52,7 +54,7 @@ body {
     margin-bottom: 30px;
     padding: 15px;
     background-color: var(--bg-secondary);
-    border-radius: 8px;
+    border-radius: 4px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -64,7 +66,7 @@ body {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
@@ -100,14 +102,14 @@ body {
     border-left: 4px solid var(--primary-color);
     padding: 1.2rem;
     margin: 1.5rem 0;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 4px 4px 0;
 }
 
 /* Cards */
 .use-card {
     background-color: var(--bg-tertiary);
     padding: 1rem;
-    border-radius: 6px;
+    border-radius: 4px;
     border-top: 2px solid var(--primary-color);
 }
 
@@ -184,7 +186,7 @@ ol li {
 .disclaimer-box {
     background-color: var(--bg-accent);
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 4px;
     margin-bottom: 2rem;
     font-size: 0.95rem;
     border-left: 3px solid var(--primary-color);
@@ -199,7 +201,7 @@ ol li {
 .survey-question {
     background-color: var(--bg-tertiary);
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 .rating-scale {
@@ -248,7 +250,7 @@ ol li {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     cursor: pointer;
@@ -274,7 +276,7 @@ ol li {
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 500;
@@ -305,7 +307,7 @@ ol li {
 .placeholder {
     background-color: var(--bg-tertiary);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 4px;
     border-left: 3px solid var(--primary-color);
     color: var(--text-secondary);
     margin-top: 15px;
@@ -382,4 +384,106 @@ ol li {
     text-align: center;
     color: #666;
     padding: 20px;
+}
+
+.resultsTableContainer {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  font-family: 'Arial', sans-serif;
+}
+
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.resultsTable thead {
+  background-color: #4a6fa5;
+  color: white;
+}
+
+.resultsTable th {
+  padding: 12px 15px;
+  text-align: center;
+  font-weight: 600;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resultsTable th:last-child {
+  border-right: none;
+}
+
+.resultsTable tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s;
+}
+
+.resultsTable tbody tr:nth-child(odd) {
+  background-color: #f8f9fa;
+}
+
+.resultsTable tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.resultsTable tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+.resultsTable td {
+  padding: 12px 15px;
+  text-align: center;
+  border-right: 1px solid #e0e0e0;
+}
+
+.resultsTable td:last-child {
+  border-right: none;
+}
+
+.scaleName {
+  font-weight: 500;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.resultsTable td:nth-child(2) { background-color: rgba(144, 238, 144, 0.3); } /* Low */
+.resultsTable td:nth-child(3) { background-color: rgba(173, 216, 230, 0.3); } /* Mid */
+.resultsTable td:nth-child(4) { background-color: rgba(255, 255, 0, 0.2); } /* Elevated */
+.resultsTable td:nth-child(5) { background-color: rgba(255, 165, 0, 0.2); } /* High */
+.resultsTable td:nth-child(6) { background-color: rgba(255, 99, 71, 0.2); } /* Very High */
+
+.resultsTable td:nth-child(2), /* Low */
+.resultsTable td:nth-child(3), /* Mid */
+.resultsTable td:nth-child(4), /* Elevated */
+.resultsTable td:nth-child(5), /* High */
+.resultsTable td:nth-child(6) { /* Very High */
+  color: #000000;
+  font-weight: 500;
+}
+
+.userId-display {
+  background-color: #2c3e50;
+  padding: 8px 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.processedAt-display {
+  background-color: #f5f5f5;
+  padding: 6px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 0.85em;
+  color: #666;
+  text-align: right;
+  font-style: italic;
 }
