@@ -1,7 +1,8 @@
 "use client";
 
-import questionData from '../../../../common/questions.json';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import questionData from '../../../../common/questions.json';
 
 export type Question = {
     id: number,
@@ -11,16 +12,17 @@ export type Question = {
 };
 
 export default function Survey() {
-    const questions: Question[] = questionData
-    const [answers, setAnswers] = useState<Record<number, string>>({})
+    const questions: Question[] = questionData;
+    const [answers, setAnswers] = useState<Record<number, string>>({});
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const answersArray = Object.entries(answers).map(([questionId, value]) => ({
             questionId: `${questionId}`,
             value: value
-        }))
+        }));
 
         try {
             const response = await fetch('http://localhost:8080/api/survey/submit-survey', {
@@ -31,22 +33,22 @@ export default function Survey() {
                 body: JSON.stringify({
                     answers: answersArray
                 }),
-            })
+            });
 
             if (response.ok) {
-                alert('Answers submitted successfully')
+                router.push('/results');
             }
         } catch (error) {
-            console.error('Error', error)
+            console.error('Error', error);
         }
-    }
+    };
 
-    const handleAnswerChange = (questionId: number, value: string) => {
+     const handleAnswerChange = (questionId: number, value: string) => {
         setAnswers(prev => ({
             ...prev,
             [questionId]: value
         }))
-    }
+    };
 
     return (
         <div className="container">
