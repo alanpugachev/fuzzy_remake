@@ -11,11 +11,11 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/survey")
-@CrossOrigin(origins = ["http://localhost:3000"]) /* only for testing */
 class SurveyController(
     private val answersRepository: AnswersRepository,
     private val surveyResultProducer: SurveyResultProducer
 ) {
+    @CrossOrigin(origins = ["http://localhost:3000"]) /* only for testing */
     @PostMapping("/submit-survey")
     fun handleSurveyFormSubmission(
         @RequestBody usersSurveyAnswersDTO: UsersSurveyAnswersDTO
