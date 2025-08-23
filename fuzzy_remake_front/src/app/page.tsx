@@ -1,107 +1,109 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Head from 'next/head';
+
+export default function LoginPage() {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('authToken', data.token);
+        router.push('/home');
+      } else {
+        setError(data.message || 'Authentication failed');
+      }
+    } catch (error) {
+      setError('Connection error. Please try again.');
+      console.error('Login error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="container">
+    <div>
+      <Head>
+        <title>Login</title>
+      </Head>
 
-      <div className="container-wrapper">
-
-        <div className="navbar">
-          <a href="/">
-            <button className="nav-button">
-              Home
-            </button>
-          </a>
-
-          <a href="/about">
-            <button className="nav-button">
-              About
-            </button>
-          </a>
-        </div>
-
-      </div>
-      <main className="content-box">
-
-        <h1>
-          Mini-Mult Assessment
-        </h1>
-        <div className="highlight-box">
-          <p>
-            A shortened 71-item version of the MMPI that maintains clinical validity while reducing administration time by 80% compared to the full 567-item test.
-          </p>
-        </div>
-
-        <h2>
-          Key Characteristics
-        </h2>
-        <ul className="feature-list">
-          <li>
-            <strong>
-              71 items (original MMPI has 567)
-            </strong>
-          </li>
-
-          <li>
-            <strong>
-              20-30 minutes completion time
-            </strong>
-          </li>
-
-          <li>
-            <strong>
-              10 clinical scales matching the full MMPI
-            </strong>
-          </li>
-
-          <li>
-            <strong>
-              3 validity scales (L, F, K) to detect response biases
-            </strong>
-          </li>
-
-          <li>
-            <strong>
-              Same scoring and interpretation as standard MMPI
-            </strong>
-          </li>
-        </ul>
-
-        <h2>
-          Common Uses
-        </h2>
-        <div className="uses-grid">
-          <div className="use-card">
-            Initial clinical screening
+      <main>
+        <h1>Login</h1>
+        
+        {error && (
+          <div style={{ color: 'red', marginBottom: '10px' }}>
+            {error}
+          </div>
+        )}
+        
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleInputChange}
+              required
+              placeholder="Enter your username"
+            />
           </div>
 
-          <div className="use-card">
-            Research studies
+          <div>
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+              placeholder="Enter your password"
+            />
           </div>
 
-          <div className="use-card">
-            Brief personality assessment
-          </div>
-
-          <div className="use-card">
-            Settings requiring rapid evaluation
-          </div>
-        </div>
-
-        <div className="survey-action">
-          <a href="/survey">
-            <button className="survey-button">
-              Take Survey
-            </button>
-          </a>
-        </div>
-
-        <p className="disclaimer">
-          Note: While efficient, the Mini-Mult may miss subtle nuances detected by the full MMPI.
-        </p>
+          <button 
+            type="submit" 
+            disabled={isLoading}
+          >
+            {isLoading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-      </footer>
     </div>
   );
 }
