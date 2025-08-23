@@ -2,6 +2,7 @@ package com.alanpugachev.fuzzy_remake.dto
 
 import jakarta.validation.constraints.NotBlank
 
+@Deprecated("delete later")
 data class UserRegistrationDTO(
     @NotBlank
     val username: String,
